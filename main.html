@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Movies and TV Shows</title>
+    <style>
+        .tab {
+            overflow: hidden;
+            border: 1px solid #ccc;
+            background-color: #f1f1f1;
+        }
+
+        .tab button {
+            background-color: inherit;
+            float: left;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 14px 16px;
+            transition: 0.3s;
+        }
+
+        .tab button:hover {
+            background-color: #ddd;
+        }
+
+        .tab button.active {
+            background-color: #ccc;
+        }
+
+        .tabcontent {
+            display: none;
+            padding: 6px 12px;
+            border: 1px solid #ccc;
+            border-top: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="tab">
+    <button class="tablinks" onclick="openTab(event, 'Movies')" id="defaultOpen">Movies</button>
+    <button class="tablinks" onclick="openTab(event, 'TVShows')">TV Shows</button>
+</div>
+
+<div id="Movies" class="tabcontent">
+    <h3>Movies</h3>
+    <form>
+        <label for="genres">Choose a genre:</label>
+        <select id="genres" name="genres">
+            <option value="horror">Horror</option>
+            <option value="action">Action</option>
+            <option value="comedy">Comedy</option>
+            <option value="drama">Drama</option>
+            <option value="biopic">Biopic</option>
+        </select>
+        <br>
+        <label for="watchedMovies">Have you watched these movies?</label>
+        <br>
+        <input type="checkbox" id="movie1" name="watchedMovies" value="movie1">
+        <label for="movie1">Movie 1</label><br>
+        <input type="checkbox" id="movie2" name="watchedMovies" value="movie2">
+        <label for="movie2">Movie 2</label><br>
+        <input type="checkbox" id="movie3" name="watchedMovies" value="movie3">
+        <label for="movie3">Movie 3</label><br>
+    </form>
+</div>
+
+<div id="TVShows" class="tabcontent">
+    <h3>TV Shows</h3>
+    <form>
+        <label for="genres1">Choose a genre</label>
+        <select id="genres1" name="genres1">
+            <option value="horror">Horror</option>
+            <option value="action">Action</option>
+            <option value="comedy">Comedy</option>
+            <option value="drama">Drama</option>
+            <option value="biopic">Biopic</option>
+        </select>
+        <br>
+        <label for="watchedTVshows">Have you watched these movies?</label>
+        <br>
+        <input type="checkbox" id="tvshow1" name="watchedMovies" value="tvshow1">
+        <label for="tvshow1">TV Show 1</label><br>
+        <input type="checkbox" id="tvshow2" name="watchedMovies" value="tvshow2">
+        <label for="tvshow2">TV Show 2</label><br>
+        <input type="checkbox" id="tvshow3" name="watchedMovies" value="tvshow3">
+        <label for="tvshow3">TV Show 3</label><br>
+    </form>
+
+
+</div>
+
+<script>
+    function openTab(evt, tabName) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+        document.getElementById(tabName).style.display = "block";
+        evt.currentTarget.className += " active";
+    }
+
+    // Get the element with id="defaultOpen" and click on it
+    document.getElementById("defaultOpen").click();
+</script>
+
+</body>
+</html>
