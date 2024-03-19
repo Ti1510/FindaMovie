@@ -43,52 +43,36 @@
 </div>
 
 <div id="Movies" class="tabcontent">
-    <h3>Movies</h3>
-    <form>
-        <label for="genres">Choose a genre:</label>
-        <select id="genres" name="genres">
-            <option value="horror">Horror</option>
-            <option value="action">Action</option>
-            <option value="comedy">Comedy</option>
-            <option value="drama">Drama</option>
-            <option value="biopic">Biopic</option>
-        </select>
-        <br>
-        <label for="watchedMovies">Have you watched these movies?</label>
-        <br>
-        <input type="checkbox" id="movie1" name="watchedMovies" value="movie1">
-        <label for="movie1">Movie 1</label><br>
-        <input type="checkbox" id="movie2" name="watchedMovies" value="movie2">
-        <label for="movie2">Movie 2</label><br>
-        <input type="checkbox" id="movie3" name="watchedMovies" value="movie3">
-        <label for="movie3">Movie 3</label><br>
-    </form>
-</div>
+        <h3>Movies</h3>
+        <form>
+            <label for="movieGenres">Choose a genre:</label>
+            <select id="movieGenres" name="genres" onchange="fetchMovies(this.value)">
+                <option value="">Select a genre</option>
+                <option value="horror">Horror</option>
+                <option value="action">Action</option>
+                <option value="comedy">Comedy</option>
+                <option value="drama">Drama</option>
+                <option value="biopic">Biopic</option>
+            </select>
+            <div id="movieList"></div>
+        </form>
+    </div>
+
 
 <div id="TVShows" class="tabcontent">
-    <h3>TV Shows</h3>
-    <form>
-        <label for="genres1">Choose a genre</label>
-        <select id="genres1" name="genres1">
+        <h3>TV Shows</h3>
+        <label for="tvGenres">Choose a genre:</label>
+        <select id="tvGenres" name="genres" onchange="fetchTVShows(this.value)">
+            <option value="">Select a genre</option>
             <option value="horror">Horror</option>
             <option value="action">Action</option>
             <option value="comedy">Comedy</option>
             <option value="drama">Drama</option>
             <option value="biopic">Biopic</option>
         </select>
-        <br>
-        <label for="watchedTVshows">Have you watched these movies?</label>
-        <br>
-        <input type="checkbox" id="tvshow1" name="watchedMovies" value="tvshow1">
-        <label for="tvshow1">TV Show 1</label><br>
-        <input type="checkbox" id="tvshow2" name="watchedMovies" value="tvshow2">
-        <label for="tvshow2">TV Show 2</label><br>
-        <input type="checkbox" id="tvshow3" name="watchedMovies" value="tvshow3">
-        <label for="tvshow3">TV Show 3</label><br>
-    </form>
+        <div id="tvShowList"></div>
+    </div>
 
-
-</div>
 
 <script>
     function openTab(evt, tabName) {
@@ -105,8 +89,55 @@
         evt.currentTarget.className += " active";
     }
 
-    // Get the element with id="defaultOpen" and click on it
+
     document.getElementById("defaultOpen").click();
+
+
+    function fetchMovies(genre) {
+            fetch(`/api/movies/${genre}`)
+                .then(response => response.json())
+                .then(data => {
+                    const movieList = document.getElementById('movieList');
+                    movieList.innerHTML = '';
+                    if (data.length === 0) {
+                        movieList.innerHTML = '<p>No movies found for this genre.</p>';
+                    } else {
+                        const ul = document.createElement('ul');
+                        data.forEach(movie => {
+                            const li = document.createElement('li');
+                            li.textContent = movie;
+                            ul.appendChild(li);
+                        });
+                        movieList.appendChild(ul);
+                    }
+                })
+                .catch(error => console.error(error));
+        }
+
+
+        function fetchTVShows(genre) {
+            fetch(`/api/tvshows/${genre}`)
+                .then(response => response.json())
+                .then(data => {
+                    const tvShowList = document.getElementById('tvShowList');
+                    tvShowList.innerHTML = '';
+                    if (data.length === 0) {
+                        tvShowList.innerHTML = '<p>No TV shows found for this genre.</p>';
+                    } else {
+                        const ul = document.createElement('ul');
+                        data.forEach(tvShow => {
+                            const li = document.createElement('li');
+                            li.textContent = tvShow;
+                            ul.appendChild(li);
+                        });
+                        tvShowList.appendChild(ul);
+                    }
+                })
+                .catch(error => console.error(error));
+        }
+
+        
+        document.getElementById("defaultOpen").click();
 </script>
 
 </body>
